@@ -1,11 +1,12 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+"use client";
+
+import { SignUpCard } from "@/features/auth/components/sign-up-card";
 
 const SignUpPage = () => {
-    return (
-        <div >
-            Signup Page
-        </div>
-    )
-}
-export default SignUpPage
+  return (
+    <div>
+      <SignUpCard />
+    </div>
+  );
+};
+export default SignUpPage;
