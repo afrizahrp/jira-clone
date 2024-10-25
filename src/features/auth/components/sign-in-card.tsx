@@ -16,8 +16,8 @@ import {
 } from "@/components/ui/form";
 
 const formSchema = z.object({
-  email: z.string().trim().min(1, "Required").email(),
-  password: z.string().min(8).max(256),
+  email: z.string().email(),
+  password: z.string().min(1, "Required"),
 });
 
 export const SignInCard = () => {
@@ -57,14 +57,21 @@ export const SignInCard = () => {
               )}
             />
 
-            <Input
-              required
-              type="password"
-              value={""}
-              placeholder="Enter your password"
-              disabled={false}
-              min={8}
-              max={256}
+            <FormField
+              name="password"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      type="password"
+                      placeholder="Enter your password"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
             <Button disabled={false} size="lg" className="w-full">
               Login
