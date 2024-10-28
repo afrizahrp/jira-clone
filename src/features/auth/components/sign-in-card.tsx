@@ -14,6 +14,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import Link from "next/link";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -23,10 +24,10 @@ const formSchema = z.object({
 export const SignInCard = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: { email: "", password: "" },
+    defaultValues: { email: "afriza@gmail.com", password: "1234567" },
   });
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    console.log({ values });
   };
 
   return (
@@ -101,6 +102,15 @@ export const SignInCard = () => {
           <FaGithub className="mr-2 size-5" />
           Login With Github
         </Button>
+      </CardContent>
+      <div className="px-7">
+        <DottedSeparator />
+      </div>
+      <CardContent className="p-7 flex items-center justify-center">
+        <p>Don&apos;t have an account ? </p>
+        <Link href="/sign-up" className="text-primary-500 ml-1">
+          <span className="text-blue-700">&nbsp;Sign Up</span>
+        </Link>
       </CardContent>
     </Card>
   );
