@@ -31,9 +31,9 @@ export const SignUpCard = () => {
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      name: "afriza",
-      email: "afriza@gmail.com",
-      password: "1234567",
+      name: "afriza.hrp",
+      email: "afriza.hrp@gmail.com",
+      password: "Afrbyu12^^",
     },
   });
 
