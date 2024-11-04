@@ -2,7 +2,7 @@ import { z } from "zod";
 import { Hono } from "hono";
 import { ID } from "node-appwrite";
 import { zValidator } from "@hono/zod-validator";
-import { setCookie } from "hono/cookie";
+import { deleteCookie, setCookie } from "hono/cookie";
 import { createAdminClient } from "@/lib/appwrite";
 import { loginSchema, registerSchema } from "../schemas";
 import { AUTH_COOKIE } from "../constants";
@@ -23,7 +23,7 @@ const app = new Hono()
         path: "/",
         httpOnly: true,
         secure: true,
-        sameSite: "strict",
+        sameSite: "Strict",
         maxAge: 60 * 60 * 24 * 7,
       });
 
@@ -40,13 +40,18 @@ const app = new Hono()
 
     setCookie(c, AUTH_COOKIE, session.secret, {
       path: "/",
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
+      httpOnly: false,
+      secure: false,
+      sameSite: "lax",
       maxAge: 60 * 60 * 24 * 7,
     });
 
-    return c.json({ success: true });
+    return c.json({ data: user });
   });
+
+// .post("/logout", sessionMiddleWare, (c) => {
+//   deleteCookie(c, AUTH_COOKIE);
+//   return c.json({ success: true });
+// });
 
 export default app;
