@@ -1,8 +1,7 @@
-import { z } from "zod";
 import { Hono } from "hono";
 import { ID } from "node-appwrite";
 import { zValidator } from "@hono/zod-validator";
-import { deleteCookie, setCookie } from "hono/cookie";
+import { setCookie } from "hono/cookie";
 import { createAdminClient } from "@/lib/appwrite";
 import { loginSchema, registerSchema } from "../schemas";
 import { AUTH_COOKIE } from "../constants";
@@ -15,7 +14,6 @@ const app = new Hono()
 
     async (c) => {
       const { email, password } = c.req.valid("json");
-
       const { account } = await createAdminClient();
       const session = await account.createEmailPasswordSession(email, password);
 
@@ -23,7 +21,7 @@ const app = new Hono()
         path: "/",
         httpOnly: true,
         secure: true,
-        sameSite: "Strict",
+        sameSite: "none",
         maxAge: 60 * 60 * 24 * 7,
       });
 
