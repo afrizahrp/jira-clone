@@ -5,7 +5,6 @@ import { setCookie } from "hono/cookie";
 import { createAdminClient } from "@/lib/appwrite";
 import { loginSchema, registerSchema } from "../schemas";
 import { AUTH_COOKIE } from "../constants";
-import path from "path";
 
 const app = new Hono()
   .post(
@@ -32,7 +31,7 @@ const app = new Hono()
     const { name, email, password } = c.req.valid("json");
     const { account } = await createAdminClient();
 
-    const user = await account.create(ID.unique(), email, password, name);
+    await account.create(ID.unique(), email, password, name);
 
     const session = await account.createEmailPasswordSession(email, password);
 
@@ -40,11 +39,11 @@ const app = new Hono()
       path: "/",
       httpOnly: true,
       secure: true,
-      sameSite: "Strict",
+      sameSite: "strict",
       maxAge: 60 * 60 * 24 * 7,
     });
 
-    return c.json({ data: user });
+    return c.json({ success: true });
   });
 
 // .post("/logout", sessionMiddleWare, (c) => {
